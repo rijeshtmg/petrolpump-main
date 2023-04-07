@@ -1,0 +1,12 @@
+.stockReport-Title{
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 30px;
+}
+.stockList{
+    background-color: #f9f9f9;
+    height: 520px;
+    border-radius: 8px;
+    margin-top: 40px;
+    padding: 5px 20px;
+}

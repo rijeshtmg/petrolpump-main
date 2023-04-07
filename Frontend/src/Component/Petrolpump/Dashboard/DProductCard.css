@@ -1,0 +1,20 @@
+.DProductCard{
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    width: 200px;
+    height: 130px;
+   
+}
+.productName{
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+}
+.stock{
+    text-align: center;
+}
+.price{
+    margin-top: 5px;
+    text-align: center;
+}

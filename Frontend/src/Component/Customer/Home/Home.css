@@ -1,0 +1,29 @@
+.homeTitle{
+    margin-top: 50px;
+    font-size: 20px;
+    font-weight: 600;
+    
+}
+
+.petrolPumpDetails{
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 400px);
+    grid-template-rows: 460px;
+    gap: 40px;
+}
+.petrolPumpDetail{
+    width: 400px;
+    height: 460px;
+    box-shadow: 1px 4px 8px rgba(22, 22, 22, 0.08);
+    border-radius: 8px;
+}
+
+.image1{
+   background-size: contain;
+   background-repeat: no-repeat;
+   width: 400px;
+   height: 266px;
+   border-radius: 8px 8px 0px 0px;
+}
+

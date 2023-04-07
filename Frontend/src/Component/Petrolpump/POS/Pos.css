@@ -1,0 +1,81 @@
+.pos-pageTitle{
+    font-size: 18px;
+   
+    margin-top: 50px;
+    color: #3B67FF;
+    padding-bottom: 10px;
+    border-bottom: 2.25px solid #3B67FF;
+    width: 80px;
+}
+
+.selectProduct{
+    font-size: 24px;
+    margin-top: 50px;
+    font-weight: 600;
+
+}
+
+.pos-products{
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(3,0.15fr);
+}
+
+.pos-product{
+    width: 165px;
+    height: 110px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px 15px;
+}
+
+.pos-details{
+    
+    margin-top: 40px;
+}
+.pos-detail{
+    display: flex;
+    gap: 4rem;
+    width: 65%;
+    margin-top: 30px;
+}
+
+ h1{
+    font-size: 16px;
+    font-weight: 400;
+    
+}
+
+.pos-detail input{
+    outline: none;
+    border: 1px solid #8D8F93;
+    border-radius: 5px;
+    height: 50px;
+    width: 100%;
+    padding: 0 10px;
+    margin-top: 15px;
+}
+
+.pos-data{
+    width: 100%;
+}
+
+.pos-table{
+    margin-top: 50px;
+}
+
+.billBtn{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    
+}
+.billBtn button{
+    outline: none;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #3B67FF;
+    color: white;
+}

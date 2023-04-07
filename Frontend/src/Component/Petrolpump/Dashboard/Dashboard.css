@@ -1,0 +1,18 @@
+.ourProduct{
+    font-size: 24px;
+    margin-top: 50px;
+    font-weight: 600;
+
+}
+.dash-products{
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(3,0.15fr);
+    gap: 4rem;
+}
+.dash-product{
+    background-color: #f9f9f9;
+    padding: 20px 40px;
+    border-radius: 8px;
+    height: 100px;
+}

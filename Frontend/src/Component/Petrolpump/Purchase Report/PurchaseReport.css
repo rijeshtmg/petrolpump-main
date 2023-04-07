@@ -1,0 +1,35 @@
+.purchaseReport-Title{
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 30px;
+    
+}
+.purchaseReport-dataSearch input{
+    outline: none;
+    border: 1px solid #8D8F93;
+    border-radius: 5px;
+    height: 50px;
+    width: 100%;
+    padding: 0 10px;
+    margin-top: 15px;
+}
+.purchaseReport-dataSearch{
+    display: flex;
+    gap: 4rem;
+    width: 65%;
+    margin-top: 30px;
+}
+/* .purchaseReport-data{
+    width: 100%;
+}
+
+.purchaseList{
+    background-color: #f9f9f9;
+    height: 520px;
+    border-radius: 8px;
+    margin-top: 40px;
+    padding: 5px 20px;
+}
+table{
+    margin-top: 40px;
+} */
