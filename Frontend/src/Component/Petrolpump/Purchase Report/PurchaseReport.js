@@ -87,15 +87,6 @@ const PurchaseReport = () => {
     <>
       <NavBar />
       <h1 className="purchaseReport-Title"> Purchase Report</h1>
-      <div className="purchaseReport-dataSearch">
-        <div className="purchaseReport-data">
-          <h1>Start Date:</h1> <input />{" "}
-        </div>
-        <div className="purchaseReport-data">
-          <h1>End Date:</h1> <input />{" "}
-        </div>
-        <button className="searchBtn">Search</button>
-      </div>
       <div className="dashboard">
         <div className="productListContainer">
           <DataGrid

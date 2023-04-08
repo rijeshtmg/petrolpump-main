@@ -1,99 +1,137 @@
-import React from "react";
-import CNav from "../CNav/CNav";
+import React, { useState, useEffect } from "react";
 import "./Purchase.css";
-const Purchase = () => {
+import { useSelector, useDispatch } from "react-redux";
+import { getProduct } from "../../../actions/ProductActions";
+import CNav from "../CNav/CNav";
+import ProductCard from "../../Petrolpump/ProductCard/ProductCard";
+import PurchaseTable from "./PurchaseTable";
+import axios from "axios";
+import { toast } from "react-toastify";
+const Purchase = ({ match }) => {
+  const [total, setTotal] = useState(0);
+  const [list, setList] = useState([]);
+  const [data, setData] = useState({
+    name: "",
+    quantity: 0,
+  });
+  const [price, setPrice] = useState(0);
+  const [type, setType] = useState({});
+
+  const handleSubmit = async () => {
+    setList([
+      ...list,
+      {
+        product: type?.name,
+        amount: price,
+        quantity: data.quantity,
+        rate: type?.saleprice,
+      },
+    ]);
+  };
+
+  const handleBill = async (e) => {
+    console.log("call");
+    try {
+      await axios.post(`${process.env.REACT_APP_API}/api/v2/purchase/sales`, {
+        name: data.name,
+        list: list,
+        total: total,
+      });
+      toast.success("success");
+      setTimeout(() => {
+        window.location.reload();
+      }, 200);
+    } catch (error) {
+      toast.error("error");
+    }
+  };
+
+  const handleChange = (type) => (e) => {
+    setData({ ...data, [type]: e.target.value });
+  };
+  const dispatch = useDispatch();
+
+  const { products, error } = useSelector((state) => state.products);
+
+  const keyword = match.params.keyword;
+
+  useEffect(() => {
+    dispatch(getProduct(keyword));
+  }, [dispatch, keyword, error]);
+
+  useEffect(() => {
+    let temp = (type?.saleprice || 0) * (data.quantity || 0);
+    setPrice(temp);
+  }, [data.quantity, type]);
+
+  useEffect(() => {
+    let gt = list.reduce((initial, final) => {
+      return initial + (parseInt(final?.amount) || 0);
+    }, 0);
+    setTotal(gt);
+  }, [list]);
+
+  const [] = useState("");
   return (
-    <>
+    <div className="newSale">
       <CNav />
-      <h1 className="purchase-pageTitle">New Purchase</h1>
+      <h1 className="newSale-pageTitle">New Sale</h1>
       <p className="selectProduct"> Select a product</p>
-      <div className="purchase-products">
-        <div className="purchase-product">
-          <h5>Petrol</h5> <p>Rs 182/Ltr</p>{" "}
-        </div>
-        <div className="purchase-product">
-          <h5>Diesel</h5> <p>Rs 170/Ltr</p>{" "}
-        </div>
-        <div className="purchase-product">
-          <h5>Kerosene</h5> <p>Rs 170/Ltr</p>{" "}
-        </div>
-      </div>
-      <div className="purchase-details">
-        <div className="purchase-detail">
-          <div className="purchase-data purchase-data-Customer">
-            <h1>Petrolpump Name:</h1> <input />{" "}
-          </div>
-        </div>
-        <div className="purchase-detail">
-          <div className="purchase-data">
-            <h1>Quantity in Ltr:</h1> <input />{" "}
-          </div>
-          <div className="purchase-data">
-            <h1>Amount:</h1> <input />{" "}
-          </div>
+      <div className="newSale-products">
+        <div className="products">
+          {products &&
+            products.map((product) => (
+              <ProductCard
+                type={type}
+                key={product.id}
+                product={product}
+                setType={setType}
+              />
+            ))}
         </div>
       </div>
-      <div className="purchase-table">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">
-                Product<span style={{ color: "red" }}>*</span>
-              </th>
-              <th scope="col">
-                Quantity<span style={{ color: "red" }}>*</span>
-              </th>
-              <th scope="col">
-                Rate<span style={{ color: "red" }}>*</span>
-              </th>
-              <th scope="col">
-                Amount<span style={{ color: "red" }}>*</span>
-              </th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Petrol</td>
-              <td>10</td>
-              <td>180</td>
-              <td>1800</td>
-              <td>
-                <button className="removeBtn">x</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Petrol</td>
-              <td>10</td>
-              <td>180</td>
-              <td>1800</td>
-              <td>
-                <button className="removeBtn">x</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Petrol</td>
-              <td>10</td>
-              <td>180</td>
-              <td>1800</td>
-              <td>
-                <button className="removeBtn">x</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div className="newSale-details">
+        <div className="newSale-detail">
+          <div className="newSale-data newSale-data-petrolpump">
+            <h1>Petrolpump Name:</h1>{" "}
+            <input onChange={handleChange("name")} value={data.name} />
+          </div>
+        </div>
+        <div className="newSale-detail">
+          <div className="newSale-data">
+            <h1>Quantity in Ltr:</h1>{" "}
+            <input
+              onChange={handleChange("quantity")}
+              value={data.quantity}
+              type="number"
+            />
+          </div>
+          <div className="newSale-data">
+            <h1>Amount:</h1> <input placeholder={price} readOnly />
+          </div>
+          <div>
+            <button
+              className="submitBtn"
+              onClick={() => {
+                handleSubmit();
+              }}
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="sale-Data">
+        <PurchaseTable list={list} />
         <div className="billBtn">
           <div>
-            <h1>Payment Type:</h1>
-          </div>
-          <div>
             <h1>Grand Total</h1>
-            <input />
+            <input readOnly value={total} />
           </div>
-          <button>Generate Bill</button>
+          <button onClick={handleBill}>Generate Bill</button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

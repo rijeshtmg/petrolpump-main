@@ -1,96 +1,138 @@
-import React from 'react'
-import Combobox from "react-widgets/Combobox";
-import './Pos.css'
+import React, { useState, useEffect } from "react";
+import "../NewSale/NewSale.css";
+import { useSelector, useDispatch } from "react-redux";
+import { getProduct } from "../../../actions/ProductActions";
 import Nav from "../Navbar/Nav";
-const POS = () => {
+import ProductCard from "../ProductCard/ProductCard";
+import SalesTable from "../NewSale/SalesTable";
+import axios from "axios";
+import { toast } from "react-toastify";
+const POS = ({ match }) => {
+  const [total, setTotal] = useState(0);
+  const [list, setList] = useState([]);
+  const [data, setData] = useState({
+    name: "",
+    quantity: 0,
+  });
+  const [price, setPrice] = useState(0);
+  const [type, setType] = useState({});
+
+  const handleSubmit = async () => {
+    setList([
+      ...list,
+      {
+        product: type?.name,
+        amount: price,
+        quantity: data.quantity,
+        rate: type?.saleprice,
+      },
+    ]);
+  };
+
+  const handleBill = async (e) => {
+    console.log("call");
+    try {
+      await axios.post(`${process.env.REACT_APP_API}/api/v2/purchase/sales`, {
+        name: data.name,
+        list: list,
+        total: total,
+      });
+      toast.success("success");
+      setTimeout(() => {
+        window.location.reload();
+      }, 200);
+    } catch (error) {
+      toast.error("error");
+    }
+  };
+
+  const handleChange = (type) => (e) => {
+    setData({ ...data, [type]: e.target.value });
+  };
+  const dispatch = useDispatch();
+
+  const { products, error } = useSelector((state) => state.products);
+
+  const keyword = match.params.keyword;
+
+  useEffect(() => {
+    dispatch(getProduct(keyword));
+  }, [dispatch, keyword, error]);
+
+  useEffect(() => {
+    let temp = (type?.saleprice || 0) * (data.quantity || 0);
+    setPrice(temp);
+  }, [data.quantity, type]);
+
+  useEffect(() => {
+    let gt = list.reduce((initial, final) => {
+      return initial + (parseInt(final?.amount) || 0);
+    }, 0);
+    setTotal(gt);
+  }, [list]);
+
+  const [] = useState("");
   return (
-    <div className="pos">
-      <Nav/>
-      <h1 className="pos-pageTitle">New Sale</h1>
+    <div className="newSale">
+      <Nav />
+      <h1 className="newSale-pageTitle">New Sale</h1>
       <p className="selectProduct"> Select a product</p>
-      <div className="pos-products">
-        <div className="pos-product">
-          <h5>Petrol</h5> <p>Rs 182/Ltr</p>{" "}
-        </div>
-        <div className="pos-product">
-          <h5>Diesel</h5> <p>Rs 170/Ltr</p>{" "}
-        </div>
-        <div className="pos-product">
-          <h5>Kerosene</h5> <p>Rs 170/Ltr</p>{" "}
-        </div>
-      </div>
-      <div className="pos-details">
-        <div className="pos-detail">
-          <div className="pos-data">
-            <h1>Invoice No. :</h1> <input placeholder="Eg: 101" />{" "}
-          </div>
-          <div className="pos-data">
-            <h1>Customer Name:</h1> <input />{" "}
-          </div>
-        </div>
-        <div className="pos-detail">
-          <div className="pos-data">
-            <h1>Quantity in Ltr:</h1> <input />{" "}
-          </div>
-          <div className="pos-data">
-            <h1>Amount:</h1> <input />{" "}
-          </div>
+      <div className="newSale-products">
+        <div className="products">
+          {products &&
+            products.map((product) => (
+              <ProductCard
+                type={type}
+                key={product.id}
+                product={product}
+                setType={setType}
+              />
+            ))}
         </div>
       </div>
-      <div className="pos-table">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Product</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Rate</th>
-              <th scope="col">Total</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Petrol</td>
-              <td>10</td>
-              <td>180</td>
-              <td>1800</td>
-              <td style={{ fontSize: 20, color: "red" }}>x</td>
-            </tr>
-            <tr>
-              <td>Petrol</td>
-              <td>10</td>
-              <td>180</td>
-              <td>1800</td>
-              <td style={{ fontSize: 20, color: "red" }}>x</td>
-            </tr>
-            <tr>
-              <td>Petrol</td>
-              <td>10</td>
-              <td>180</td>
-              <td>1800</td>
-              <td style={{ fontSize: 20, color: "red" }}>x</td>
-            </tr>
-          </tbody>
-        </table>
-        <div className='billBtn'>
-          <div>
-            <h1>Payment Type:</h1>
-            <Combobox
-              data={["Cash", "Mobile Banking"]}
-              placeholder="Select Option"
+      <div className="newSale-details">
+        <div className="newSale-detail">
+          <div className="newSale-data newSale-data-Customer">
+            <h1>Customer Name:</h1>{" "}
+            <input onChange={handleChange("name")} value={data.name} />
+          </div>
+        </div>
+        <div className="newSale-detail">
+          <div className="newSale-data">
+            <h1>Quantity in Ltr:</h1>{" "}
+            <input
+              onChange={handleChange("quantity")}
+              value={data.quantity}
+              type="number"
             />
           </div>
+          <div className="newSale-data">
+            <h1>Amount:</h1> <input placeholder={price} readOnly />
+          </div>
+          <div>
+            <button
+              className="submitBtn"
+              onClick={() => {
+                handleSubmit();
+              }}
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="sale-Data">
+        <SalesTable list={list} />
+        <div className="billBtn">
           <div>
             <h1>Grand Total</h1>
-            <input />
+            <input readOnly value={total} />
           </div>
-          
-            <button>Generate Bill</button>
-          
+          <button onClick={handleBill}>Generate Bill</button>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default POS
+export default POS;

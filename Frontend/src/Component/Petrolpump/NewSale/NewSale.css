@@ -13,15 +13,7 @@
     font-weight: 600;
 
 }
-.removeBtn{
-    background-color: red;
-    outline: none;
-    border: none;
-    color: white;
-    border-radius: 4px;
-    padding: 5px 20px;
 
-}
 
 .newSale-products{
     margin-top: 30px;
@@ -67,7 +59,17 @@
     width: 100%;
 }
 
-.newSale-table{
+.submitBtn{
+    outline: none;
+    border: none;
+    height: 50px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #3B67FF;
+    color: white;
+    margin-top: 40px;
+}
+.sale-Data{
     margin-top: 50px;
 }
 

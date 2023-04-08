@@ -1,10 +1,10 @@
-.purchase-pageTitle{
+.newSale-pageTitle{
     font-size: 18px;
     margin-top: 50px;
     color: #3B67FF;
     padding-bottom: 10px;
     border-bottom: 2.25px solid #3B67FF;
-    width: 120px;
+    width: 80px;
 }
 
 .selectProduct{
@@ -13,30 +13,26 @@
     font-weight: 600;
 
 }
-.removeBtn{
-    background-color: red;
-    outline: none;
-    border: none;
-    color: white;
-    border-radius: 4px;
-    padding: 5px 20px;
 
-}
 
-.purchase-products{
+.newSale-products{
     margin-top: 30px;
     display: grid;
     grid-template-columns: repeat(3,0.15fr);
     gap: 4rem;
 }
 
+.products{
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
 
-
-.purchase-details{
+.newSale-details{
 
     margin-top: 40px;
 }
-.purchase-detail{
+.newSale-detail{
     display: flex;
     gap: 4rem;
     width: 65%;
@@ -49,7 +45,7 @@
     
 }
 
-.purchase-detail input{
+.newSale-detail input{
     outline: none;
     border: 1px solid #8D8F93;
     border-radius: 5px;
@@ -59,11 +55,21 @@
     margin-top: 15px;
 }
 
-.purchase-data{
+.newSale-data{
     width: 100%;
 }
 
-.purchase-table{
+.submitBtn{
+    outline: none;
+    border: none;
+    height: 50px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #3B67FF;
+    color: white;
+    margin-top: 40px;
+}
+.sale-Data{
     margin-top: 50px;
 }
 
@@ -83,9 +89,17 @@
     color: white;
 }
 
-.purchase-product{
+.custom-select{
+    height: 1000px;
+}
+
+.newSale-product{
     background-color: #f9f9f9;
     padding: 20px 40px;
     border-radius: 8px;
     height: 100px;
+}
+
+.newSale-data-petrolpump{
+    width: 310px;
 }

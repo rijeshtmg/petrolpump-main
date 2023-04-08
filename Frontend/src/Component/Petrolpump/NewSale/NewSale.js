@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import './NewSale.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { getProduct } from '../../../actions/ProductActions';
-import Nav from '../Navbar/Nav';
-import ProductCard from '../ProductCard/ProductCard';
-import SalesTable from './SalesTable';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import React, { useState, useEffect } from "react";
+import "./NewSale.css";
+import { useSelector, useDispatch } from "react-redux";
+import { getProduct } from "../../../actions/ProductActions";
+import Nav from "../Navbar/Nav";
+import ProductCard from "../ProductCard/ProductCard";
+import SalesTable from "./SalesTable";
+import axios from "axios";
+import { toast } from "react-toastify";
 const NewSale = ({ match }) => {
   const [total, setTotal] = useState(0);
   const [list, setList] = useState([]);
   const [data, setData] = useState({
-    name: '',
+    name: "",
     quantity: 0,
   });
   const [price, setPrice] = useState(0);
@@ -30,19 +30,19 @@ const NewSale = ({ match }) => {
   };
 
   const handleBill = async (e) => {
-    console.log('call');
+    console.log("call");
     try {
       await axios.post(`${process.env.REACT_APP_API}/api/v2/purchase/sales`, {
         name: data.name,
         list: list,
         total: total,
       });
-      toast.success('success');
+      toast.success("success");
       setTimeout(() => {
         window.location.reload();
       }, 200);
     } catch (error) {
-      toast.error('error');
+      toast.error("error");
     }
   };
 
@@ -71,7 +71,7 @@ const NewSale = ({ match }) => {
     setTotal(gt);
   }, [list]);
 
-  const [paymentState, setPaymentState] = useState('');
+  const [] = useState("");
   return (
     <div className="newSale">
       <Nav />
@@ -93,15 +93,15 @@ const NewSale = ({ match }) => {
       <div className="newSale-details">
         <div className="newSale-detail">
           <div className="newSale-data newSale-data-Customer">
-            <h1>Customer Name:</h1>{' '}
-            <input onChange={handleChange('name')} value={data.name} />
+            <h1>Customer Name:</h1>{" "}
+            <input onChange={handleChange("name")} value={data.name} />
           </div>
         </div>
         <div className="newSale-detail">
           <div className="newSale-data">
-            <h1>Quantity in Ltr:</h1>{' '}
+            <h1>Quantity in Ltr:</h1>{" "}
             <input
-              onChange={handleChange('quantity')}
+              onChange={handleChange("quantity")}
               value={data.quantity}
               type="number"
             />
@@ -111,6 +111,7 @@ const NewSale = ({ match }) => {
           </div>
           <div>
             <button
+              className="submitBtn"
               onClick={() => {
                 handleSubmit();
               }}
@@ -120,26 +121,9 @@ const NewSale = ({ match }) => {
           </div>
         </div>
       </div>
-      <div className="newSale-table">
+      <div className="sale-Data">
         <SalesTable list={list} />
         <div className="billBtn">
-          <div>
-            <h1>Payment Type:</h1>
-            <div>
-              <select
-                className="custom-select"
-                value={paymentState}
-                onChange={(e) => {
-                  const selectedPayment = e.target.value;
-                  setPaymentState(selectedPayment);
-                }}
-              >
-                <option value="">Select a payment opiton</option>
-                <option value="Cash">Cash</option>
-                <option value="Mobile Banking">Mobile Banking</option>
-              </select>
-            </div>
-          </div>
           <div>
             <h1>Grand Total</h1>
             <input readOnly value={total} />

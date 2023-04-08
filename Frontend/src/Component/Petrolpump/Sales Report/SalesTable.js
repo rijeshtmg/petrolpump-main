@@ -1,17 +1,17 @@
-import * as React from 'react';
-import DataTable from 'react-data-table-component';
+import * as React from "react";
+import DataTable from "react-data-table-component";
 
 const columns = [
   {
-    name: 'S.No',
+    name: "S.No",
     selector: (row, index) => index + 1,
   },
   {
-    name: 'name',
+    name: "Customer Name",
     selector: (row) => row?.name,
   },
   {
-    name: 'total',
+    name: "Total Amount",
     selector: (row) => row?.total,
   },
 ];
@@ -19,7 +19,7 @@ const columns = [
 // data provides access to your row data
 const ExpandedComponent = ({ data }) => {
   return (
-    <table style={{ width: '100%' }}>
+    <table style={{ width: "100%" }}>
       <thead>
         <tr>
           <th>Product</th>

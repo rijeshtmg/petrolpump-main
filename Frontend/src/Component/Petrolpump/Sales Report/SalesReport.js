@@ -20,7 +20,7 @@ const SalesReport = () => {
     <>
       <Nav />
       <h1 className="salesReport-Title">Sales Report</h1>
-      <div className="salesReport-dataSearches">
+      {/* <div className="salesReport-dataSearches">
         <div className="salesReport-dataSearch">
           <div className="salesReport-data">
             <h1>Start Date:</h1> <input />{' '}
@@ -30,9 +30,9 @@ const SalesReport = () => {
           </div>
           <button className="searchBtn">Search</button>
         </div>
-      </div>
+      </div> */}
 
-      <div className="newSale-table">
+      <div>
         <SalesTable lists={lists} />
       </div>
     </>
