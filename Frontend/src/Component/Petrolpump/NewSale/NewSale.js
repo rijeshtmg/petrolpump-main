@@ -32,7 +32,7 @@ const NewSale = ({ match }) => {
   const handleBill = async (e) => {
     console.log("call");
     try {
-      await axios.post(`${process.env.REACT_APP_API}/api/v2/purchase/sales`, {
+      await axios.post(`${process.env.REACT_APP_API}/api/v2/sales`, {
         name: data.name,
         list: list,
         total: total,
@@ -92,7 +92,7 @@ const NewSale = ({ match }) => {
       </div>
       <div className="newSale-details">
         <div className="newSale-detail">
-          <div className="newSale-data newSale-data-Customer">
+          <div className="newSale-data newSale-data-customer">
             <h1>Customer Name:</h1>{" "}
             <input onChange={handleChange("name")} value={data.name} />
           </div>

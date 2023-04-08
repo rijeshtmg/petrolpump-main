@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.route('/admin/sales').get(getAdminSale);
 
-router.route('/purchase/sales').post(createSale);
+router.route('/sales').post(createSale);
 
 module.exports = router;

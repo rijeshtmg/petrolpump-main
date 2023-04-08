@@ -24,7 +24,7 @@ const listSchema = new mongoose.Schema({
   },
 });
 
-const purchaseSchema = new mongoose.Schema({
+const userPurchaseSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Please enter a name of a product'],
@@ -45,4 +45,4 @@ const purchaseSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Sale', purchaseSchema);
+module.exports = mongoose.model('UserPurchase', userPurchaseSchema);
