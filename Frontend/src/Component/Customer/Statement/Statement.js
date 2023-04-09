@@ -8,7 +8,7 @@ const Statement = () => {
   const loadData = async () => {
     try {
       let res = await axios.get(
-        `${process.env.REACT_APP_API}/api/v2/user/userpurchase`
+        `${process.env.REACT_APP_API}/api/v2/user/purchase`
       );
       setLists(res.data.sales);
     } catch (error) {}
