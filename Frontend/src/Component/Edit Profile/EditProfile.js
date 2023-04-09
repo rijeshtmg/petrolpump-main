@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import './EditProfile.css';
-import HomeIcon from '@mui/icons-material/Home';
-import DescriptionIcon from '@mui/icons-material/Description';
-import Person2Icon from '@mui/icons-material/Person2';
-import MailIcon from '@mui/icons-material/Mail';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearErrors, loadUser, updateProfile } from '../../actions/userAction';
-import { UPDATE_PROFILE_RESET } from '../../constans/userContans';
-import { ToastContainer, toast } from 'react-toastify';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import "./EditProfile.css";
+import HomeIcon from "@mui/icons-material/Home";
+import DescriptionIcon from "@mui/icons-material/Description";
+import Person2Icon from "@mui/icons-material/Person2";
+import MailIcon from "@mui/icons-material/Mail";
+import { useDispatch, useSelector } from "react-redux";
+import { clearErrors, loadUser, updateProfile } from "../../actions/userAction";
+import { UPDATE_PROFILE_RESET } from "../../constans/userContans";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 
 const EditProfile = ({ history }) => {
   const dispatch = useDispatch();
@@ -17,25 +17,25 @@ const EditProfile = ({ history }) => {
 
   const { error, isUpdated } = useSelector((state) => state.profile);
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState();
   const [address, setAddress] = useState();
   const [description, setDescription] = useState();
-  const [avatarPreview, setAvatarPreview] = useState('/profile.png');
+  const [avatarPreview, setAvatarPreview] = useState("/profile.png");
 
   const updateProfileSubmit = (e) => {
     e.preventDefault();
 
     const myForm = new FormData();
 
-    myForm.set('name', name);
-    myForm.set('email', email);
+    myForm.set("name", name);
+    myForm.set("email", email);
     if (avatar) {
-      myForm.set('avatar', avatar);
+      myForm.set("avatar", avatar);
     }
-    myForm.set('description', description);
-    myForm.set('address', address);
+    myForm.set("description", description);
+    myForm.set("address", address);
     dispatch(updateProfile(myForm));
   };
 
@@ -64,9 +64,9 @@ const EditProfile = ({ history }) => {
     }
 
     if (isUpdated) {
-      toast.success('Profile updated successfully');
+      toast.success("Profile updated successfully");
 
-      history.push('/profile');
+      history.push("/profile");
 
       dispatch({
         type: UPDATE_PROFILE_RESET,
@@ -78,7 +78,7 @@ const EditProfile = ({ history }) => {
     try {
       let res = await axios.get(`${process.env.REACT_APP_API}/api/v2/me`, {
         headers: {
-          authorization: localStorage.getItem('token'),
+          authorization: localStorage.getItem("token"),
         },
       });
       console.log(res.data);
@@ -94,12 +94,12 @@ const EditProfile = ({ history }) => {
 
   return (
     <>
-      <div className="updateProfileContainer">
-        <div className="updateProfileBox">
-          <h2 className="updateProfileHeading">Update Profile</h2>
+      <div className="UpdateProfileContainer">
+        <div className="UpdateProfileBox">
+          <h2 className="UpdateProfileHeading">Update Profile</h2>
 
           <form
-            className="updateProfileForm"
+            className="UpdateProfileForm"
             encType="multipart/form-data"
             onSubmit={updateProfileSubmit}
           >
@@ -156,7 +156,7 @@ const EditProfile = ({ history }) => {
                 onChange={updateProfileDataChange}
               />
             </div>
-            <input type="submit" value="Update" className="updateProfileBtn" />
+            <input type="submit" value="Update" className="UpdateProfileBtn" />
           </form>
         </div>
       </div>

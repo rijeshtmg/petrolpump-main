@@ -21,7 +21,8 @@ const ExpandedComponent = ({ data }) => {
   return (
     <table style={{ width: "100%" }}>
       <thead>
-        <tr>
+        <tr
+        >
           <th>Product</th>
           <th>Price</th>
           <th>Quanitity</th>

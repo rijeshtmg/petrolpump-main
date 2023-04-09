@@ -10,7 +10,7 @@ const Statement = () => {
       let res = await axios.get(
         `${process.env.REACT_APP_API}/api/v2/user/purchase`
       );
-      setLists(res.data.sales);
+      setLists(res.data.userPurchases);
     } catch (error) {}
   };
   useEffect(() => {

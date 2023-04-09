@@ -38,7 +38,7 @@ const Profile = ({ history }) => {
 
   return (
     <>
-      <div className="profileInfo">
+      <div className="ProfileInfo">
         <div className="profileContainer">
           <div
             style={{
@@ -53,6 +53,7 @@ const Profile = ({ history }) => {
                 opacity: '1',
                 fontSize: '2vmax',
                 marginTop: '20px',
+                fontWeight:"500"
               }}
             >
               My Profile

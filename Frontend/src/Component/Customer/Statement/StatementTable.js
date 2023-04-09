@@ -7,7 +7,7 @@ const columns = [
     selector: (row, index) => index + 1,
   },
   {
-    name: "Customer Name",
+    name: "Petrol Pump Name",
     selector: (row) => row?.name,
   },
   {
@@ -21,7 +21,7 @@ const ExpandedComponent = ({ data }) => {
   return (
     <table style={{ width: "100%" }}>
       <thead>
-        <tr>
+        <tr >
           <th>Product</th>
           <th>Price</th>
           <th>Quanitity</th>

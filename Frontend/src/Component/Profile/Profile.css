@@ -33,8 +33,10 @@ img.profile__img {
    
     color:#959595;
 }
-.profileInfo{
+.ProfileInfo{
     background-color: #f9f9f9;
+    width: 50vw;
+    margin-left: 300px;
     margin-top: 20px;
     border-radius: 10px;
 }
