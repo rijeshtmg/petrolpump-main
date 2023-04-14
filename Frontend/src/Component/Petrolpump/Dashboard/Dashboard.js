@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Nav from "../Navbar/Nav";
 import axios from "axios";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from "recharts";
 import { useSelector, useDispatch } from "react-redux";
 import { getProduct } from "../../../actions/ProductActions";
 import DProductCard from "./DProductCard";
@@ -28,6 +37,21 @@ const Dashboard = ({ match }) => {
   useEffect(() => {
     loadData();
   }, []);
+  const data = [
+    { name: "January", value: 400 },
+    { name: "February", value: 300 },
+    { name: "March", value: 200 },
+    { name: "April", value: 278 },
+    { name: "May", value: 189 },
+    { name: "June", value: 239 },
+    { name: "July", value: 349 },
+    { name: "August", value: 478 },
+    { name: "September", value: 289 },
+    { name: "October", value: 398 },
+    { name: "November", value: 498 },
+    { name: "December", value: 589 },
+  ];
+
   return (
     <>
       <Nav />
@@ -40,6 +64,20 @@ const Dashboard = ({ match }) => {
             ))}
         </div>
       </div>
+      <div>
+        <div className="ourProduct">Sales Chart</div>
+        <div style={{ marginTop: "20px" }}>
+          <LineChart width={1000} height={500} data={data}>
+            <XAxis dataKey="name" />
+            <YAxis />
+            <CartesianGrid stroke="#ccc" />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="value" stroke="#8884d8" />
+          </LineChart>
+        </div>
+      </div>
+
       <div>
         {" "}
         <p className="ourProduct"> Today Sales</p>

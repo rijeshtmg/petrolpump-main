@@ -1,29 +1,29 @@
-import React from 'react';
-import { DataGrid } from '@material-ui/data-grid';
+import React from "react";
+import { DataGrid } from "@material-ui/data-grid";
 
 const SalesTable = ({ list }) => {
   const columns = [
     {
-      field: 'product',
-      headerName: 'Product',
+      field: "product",
+      headerName: "Product",
       minWidth: 100,
       flex: 0.5,
     },
     {
-      field: 'rate',
-      headerName: 'Rate',
+      field: "rate",
+      headerName: "Rate",
       minWidth: 100,
       flex: 0.5,
     },
     {
-      field: 'quantity',
-      headerName: 'Quantity',
+      field: "quantity",
+      headerName: "Quantity",
       minWidth: 100,
       flex: 0.5,
     },
     {
-      field: 'amount',
-      headerName: 'Amount',
+      field: "amount",
+      headerName: "Amount",
       minWidth: 150,
       flex: 0.5,
     },

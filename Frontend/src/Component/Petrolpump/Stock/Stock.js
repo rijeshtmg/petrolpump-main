@@ -62,7 +62,7 @@ const Stock = ({ history }) => {
       renderCell: (params) => {
         return (
           <Fragment>
-            <Link to={`/edit/product/${params.getValue(params.id, "id")}`}>
+            <Link to={`/stockup/${params.getValue(params.id, "id")}`}>
               <EditIcon />
             </Link>
 

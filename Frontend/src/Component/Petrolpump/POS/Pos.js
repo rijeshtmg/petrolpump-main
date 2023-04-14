@@ -124,11 +124,22 @@ const POS = ({ match }) => {
       <div className="sale-Data">
         <SalesTable list={list} />
         <div className="billBtn">
-          <div>
-            <h1>Grand Total</h1>
-            <input readOnly value={total} />
+          <div className="d-flex">
+            <h1 className="mt-2 text-align-center">Grand Total</h1>
+            <input
+              className="ms-2 mb-3 me-2"
+              style={{
+                border: "1px solid #e5e5e5",
+                borderRadius: "4px",
+                height: "40px",
+              }}
+              readOnly
+              value={total}
+            />
           </div>
-          <button onClick={handleBill}>Generate Bill</button>
+          <button onClick={handleBill} style={{ marginRight: "80px" }}>
+            Generate Bill
+          </button>
         </div>
       </div>
     </div>

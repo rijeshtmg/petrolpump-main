@@ -32,6 +32,13 @@ const NewSale = ({ match }) => {
   const handleBill = async (e) => {
     console.log("call");
     try {
+      await axios.put(
+        `${process.env.REACT_APP_API}/api/v2/products/${type?._id}`,
+        {
+          stock: type?.stock - data.quantity,
+        }
+      );
+
       await axios.post(`${process.env.REACT_APP_API}/api/v2/sales`, {
         name: data.name,
         list: list,
@@ -92,7 +99,7 @@ const NewSale = ({ match }) => {
       </div>
       <div className="newSale-details">
         <div className="newSale-detail">
-          <div className="newSale-data newSale-data-customer">
+          <div className="newSale-data " style={{ width: "310px" }}>
             <h1>Customer Name:</h1>{" "}
             <input onChange={handleChange("name")} value={data.name} />
           </div>
@@ -124,11 +131,22 @@ const NewSale = ({ match }) => {
       <div className="sale-Data">
         <SalesTable list={list} />
         <div className="billBtn">
-          <div>
-            <h1>Grand Total</h1>
-            <input readOnly value={total} />
+          <div className="d-flex">
+            <h1 className="mt-2 text-align-center">Grand Total</h1>
+            <input
+              className="ms-2 mb-3 me-2"
+              style={{
+                border: "1px solid #e5e5e5",
+                borderRadius: "4px",
+                height: "40px",
+              }}
+              readOnly
+              value={total}
+            />
           </div>
-          <button onClick={handleBill}>Generate Bill</button>
+          <button onClick={handleBill} style={{ marginRight: "80px" }}>
+            Generate Bill
+          </button>
         </div>
       </div>
     </div>

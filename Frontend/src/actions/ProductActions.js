@@ -99,10 +99,10 @@ export const getAdminProduct = () => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_PRODUCT_REQUEST });
 
-    const { data } = await axios.get("/api/v2/admin/products",{
-      headers:{
-        authorization:localStorage.getItem("token")
-      }
+    const { data } = await axios.get("/api/v2/admin/products", {
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
     });
 
     dispatch({
@@ -145,11 +145,14 @@ export const updateProduct = (id, productData) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     };
 
-    const { data } = await axios.put(
-      `/api/v2/product/${id}`,
+    const { data } = await axios.put(`/api/v2/product/${id}`, {
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+
       productData,
-      config
-    );
+      config,
+    });
 
     dispatch({
       type: UPDATE_PRODUCT_SUCCESS,
@@ -162,6 +165,7 @@ export const updateProduct = (id, productData) => async (dispatch) => {
     });
   }
 };
+
 
 //   Clearing errors
 export const clearErrors = () => async (dispatch) => {

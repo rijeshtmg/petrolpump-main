@@ -36,6 +36,8 @@ exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+
+
 // Update Product ---Admin
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
   let product = await Product.findById(req.params.id);
@@ -53,6 +55,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
     product,
   });
 });
+
 
 exports.getAllProducts = catchAsyncErrors(async (req, res) => {
   const resultPerPage = 8;
