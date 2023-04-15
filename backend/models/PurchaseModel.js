@@ -15,23 +15,19 @@ const purchaseSchema = new mongoose.Schema({
   },
   supplier: {
     type: String,
-    required: [true, "Please add a description of your product"],
-    maxlength: [200, "Description is can not exceed than 4000 characters"],
+    required: [true, "Please add a supplier name of your product"],
   },
   supprice: {
     type: Number,
     required: [true, "Please add a price for your product"],
-    maxLength: [8, "Price can not exceed than 8 characters"],
   },
   stock: {
     type: Number,
-    required: true,
-    maxLength: [8, "Discount price can not exceed than 4 characters"],
+    required: [true, "Please add a stock for your product"],
   },
   totalamount: {
     type: Number,
     required: true,
-    maxLength: [20, "Discount price can not exceed than 4 characters"],
   },
   user: {
     type: mongoose.Schema.ObjectId,
