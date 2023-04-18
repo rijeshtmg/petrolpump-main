@@ -66,13 +66,7 @@ const Stock = ({ history }) => {
               <EditIcon />
             </Link>
 
-            {/* <Button
-              onClick={() =>
-                deleteProductHandler(params.getValue(params.id, "id"))
-              }
-            >
-              <DeleteIcon />
-            </Button> */}
+            
           </Fragment>
         );
       },

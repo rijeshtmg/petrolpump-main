@@ -1,17 +1,17 @@
 import { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@material-ui/core";
-import MetaData from "../../more/Metadata";
+import MetaData from "../../../more/Metadata";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import PersonIcon from "@material-ui/icons/Person";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
-import { UPDATE_USER_RESET } from "../../constans/userContans";
+import { UPDATE_USER_RESET } from "../../../constans/userContans";
 import {
   getUserDetails,
   updateUser,
   clearErrors,
-} from "../../actions/userAction";
-import Loading from "../../more/Loader";
+} from "../../../actions/userAction";
+import Loading from "../../../more/Loader";
 import { ToastContainer, toast } from "react-toastify";
 import "./Updateuser.css";
 
