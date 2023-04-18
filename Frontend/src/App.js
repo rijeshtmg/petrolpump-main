@@ -21,9 +21,9 @@ import AllUsers from "./Component/Admin/AllUser/Alluser";
 import ProtectedRoute from "./Route/ProtectedRoute";
 import PumpCard from "./Component/Customer/Home/PumpCard";
 import EditProfile from "./Component/Edit Profile/EditProfile";
-
+import UpdateUser from "./Component/Edit Role/Updateuser";
 import ChangePassword from "./Component/Change Password/ChangePassword";
-import UpdateProduct from "./Component/Petrolpump/Stock/UpdateStock";
+import UpdateProduct from "./Component/Petrolpump/Edit Product/Editproduct";
 function App() {
   return (
     <Router>
@@ -84,23 +84,28 @@ function App() {
           <Route
             //isAdmin={true}
             exact
-            path="/stockup/:id"
+            path="/edit/product/:id"
             component={UpdateProduct}
           />
-
           <Route
-            isAdmin={true}
+            //isAdmin={true}
             exact
-            path="/users"
-            component={AllUsers}
+            path="/admin/user/:id"
+            component={UpdateUser}
           />
+
+          <Route isAdmin={true} exact path="/users" component={AllUsers} />
           <Route exact path="/purchase" component={Purchase} />
           <Route exact path="/pump" component={PumpCard} />
 
           <ProtectedRoute exact path="/profile" component={Profile} />
           <ProtectedRoute exact path="/editprofile" component={EditProfile} />
 
-          <Route exact path="/changepassword" component={ChangePassword} />
+          <ProtectedRoute
+            exact
+            path="/changepassword"
+            component={ChangePassword}
+          />
         </Switch>
       </div>
     </Router>

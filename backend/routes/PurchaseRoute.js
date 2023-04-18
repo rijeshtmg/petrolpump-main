@@ -8,10 +8,10 @@ const router = express.Router();
 
 router
   .route("/admin/purchases")
-  .get(isAuthenticatedUser, authorizeRoles("admin"), getAdminPurchase);
+  .get(/*isAuthenticatedUser*/ /*authorizeRoles("admin")*/ getAdminPurchase);
 
 router
   .route("/purchase/new")
-  .post(isAuthenticatedUser, authorizeRoles("admin"), createPurchase);
+  .post(/*isAuthenticatedUser*/ /*authorizeRoles("admin")*/ createPurchase);
 
 module.exports = router;

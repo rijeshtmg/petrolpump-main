@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import "../NewSale/NewSale.css";
+import "./NewSale.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getProduct } from "../../../actions/ProductActions";
 import Nav from "../Navbar/Nav";
 import ProductCard from "../ProductCard/ProductCard";
-import SalesTable from "../NewSale/SalesTable";
+import SalesTable from "./SalesTable";
 import axios from "axios";
 import { toast } from "react-toastify";
-const POS = ({ match }) => {
+const NewSale = ({ match }) => {
   const [total, setTotal] = useState(0);
   const [list, setList] = useState([]);
   const [data, setData] = useState({
@@ -32,7 +32,14 @@ const POS = ({ match }) => {
   const handleBill = async (e) => {
     console.log("call");
     try {
-      await axios.post(`${process.env.REACT_APP_API}/api/v2/purchase/sales`, {
+      await axios.put(
+        `${process.env.REACT_APP_API}/api/v2/products/${type?._id}`,
+        {
+          stock: type?.stock - data.quantity,
+        }
+      );
+
+      await axios.post(`${process.env.REACT_APP_API}/api/v2/sales`, {
         name: data.name,
         list: list,
         total: total,
@@ -92,8 +99,8 @@ const POS = ({ match }) => {
       </div>
       <div className="newSale-details">
         <div className="newSale-detail">
-          <div className="newSale-data newSale-data-Customer">
-            <h1>Customer Name:</h1>{" "}
+          <div className="newSale-data " style={{ width: "310px" }}>
+            <h1>Petrol Pump Name:</h1>{" "}
             <input onChange={handleChange("name")} value={data.name} />
           </div>
         </div>
@@ -146,4 +153,4 @@ const POS = ({ match }) => {
   );
 };
 
-export default POS;
+export default NewSale;

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   ALL_USERS_FAIL,
   ALL_USERS_REQUEST,
@@ -36,21 +36,21 @@ import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
-} from '../constans/userContans';
+} from "../constans/userContans";
 
 // Login
 export const login = (email, password) => async (dispatch) => {
   dispatch({ type: LOGIN_REQUEST });
   try {
-    const config = { headers: { 'Content-Type': 'application/json' } };
+    const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.post(
       `${process.env.REACT_APP_API}/api/v2/login`,
       { email, password },
       config
     );
 
-    localStorage.setItem('user', JSON.stringify(data.user));
-    localStorage.setItem('token', data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("token", data.token);
     dispatch({ type: LOGIN_SUCCESS, payload: data.user });
   } catch (error) {
     dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
@@ -62,7 +62,7 @@ export const register = (userData) => async (dispatch) => {
   try {
     dispatch({ type: REGISTER_USER_REQUEST });
 
-    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
 
     const { data } = await axios.post(
       `${process.env.REACT_APP_API}/api/v2/registration`,
@@ -98,8 +98,8 @@ export const loadUser = () => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     await axios.get(`${process.env.REACT_APP_API}/api/v2/logout`);
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     dispatch({ type: LOGOUT_SUCCESS });
   } catch (error) {
     dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
@@ -113,8 +113,8 @@ export const updateProfile = (userData) => async (dispatch) => {
 
     const config = {
       headers: {
-        'Content-Type': 'multipart/form-data',
-        authorization: localStorage.getItem('token'),
+        "Content-Type": "multipart/form-data",
+        authorization: localStorage.getItem("token"),
       },
     };
 
@@ -138,9 +138,18 @@ export const updatePassword = (password) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_PASSWORD_REQUEST });
 
-    const config = { headers: { 'Content-Type': 'application/json' } };
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("token"),
+      },
+    };
 
-    const { data } = await axios.put(`/api/v2/me/update`, password, config);
+    const { data } = await axios.put(
+      `${process.env.REACT_APP_API}/api/v2/me/update`,
+      password,
+      config
+    );
 
     dispatch({ type: UPDATE_PASSWORD_SUCCESS, payload: data.success });
   } catch (error) {
@@ -155,7 +164,7 @@ export const updatePassword = (password) => async (dispatch) => {
 export const getAllUsers = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_USERS_REQUEST });
-    let token = localStorage.getItem('token');
+    let token = localStorage.getItem("token");
     const { data } = await axios.get(
       `${process.env.REACT_APP_API}/api/v2/admin/users`,
       {
@@ -176,7 +185,7 @@ export const forgotPassword = (email) => async (dispatch) => {
   try {
     dispatch({ type: FORGOT_PASSWORD_REQUEST });
 
-    const config = { headers: { 'Content-Type': 'application/json' } };
+    const config = { headers: { "Content-Type": "application/json" } };
 
     const { data } = await axios.post(`/api/v2/password/forgot`, email, config);
 
@@ -194,7 +203,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
   try {
     dispatch({ type: RESET_PASSWORD_REQUEST });
 
-    const config = { headers: { 'Content-Type': 'application/json' } };
+    const config = { headers: { "Content-Type": "application/json" } };
 
     const { data } = await axios.put(
       `/api/v2/password/reset/${token}`,
@@ -245,7 +254,7 @@ export function updateUser(id, userData) {
     try {
       dispatch({ type: UPDATE_USER_REQUEST });
 
-      const config = { headers: { 'Content-Type': 'application/json' } };
+      const config = { headers: { "Content-Type": "application/json" } };
 
       const { data } = await axios.put(
         `/api/v2/admin/user/${id}`,

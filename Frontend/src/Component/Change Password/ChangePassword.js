@@ -39,7 +39,7 @@ const ChangePassword = ({ history }) => {
     }
 
     if (isUpdated) {
-      alert("Profile Updated Successfully");
+      alert("Password Updated Successfully");
       history.push("/profile");
       dispatch({
         type: UPDATE_PASSWORD_RESET,

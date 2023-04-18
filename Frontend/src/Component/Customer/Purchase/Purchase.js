@@ -78,7 +78,9 @@ const Purchase = ({ match }) => {
   return (
     <div className="newSale">
       <CNav />
-      <h1 className="newSale-pageTitle">New Sale</h1>
+      <h1 className="newSale-pageTitle" style={{ width: "120px" }}>
+        New Purchase
+      </h1>
       <p className="selectProduct"> Select a product</p>
       <div className="newSale-products">
         <div className="products">
@@ -141,7 +143,7 @@ const Purchase = ({ match }) => {
             />
           </div>
           <button onClick={handleBill} style={{ marginRight: "80px" }}>
-            Generate Bill
+            Purchase
           </button>
         </div>
       </div>

@@ -146,10 +146,6 @@ export const updateProduct = (id, productData) => async (dispatch) => {
     };
 
     const { data } = await axios.put(`/api/v2/product/${id}`, {
-      headers: {
-        authorization: localStorage.getItem("token"),
-      },
-
       productData,
       config,
     });
@@ -165,7 +161,6 @@ export const updateProduct = (id, productData) => async (dispatch) => {
     });
   }
 };
-
 
 //   Clearing errors
 export const clearErrors = () => async (dispatch) => {
