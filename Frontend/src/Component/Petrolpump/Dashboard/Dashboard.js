@@ -15,12 +15,13 @@ import { getProduct } from "../../../actions/ProductActions";
 import DProductCard from "./DProductCard";
 import Sales from "../Sales Report/SalesTable";
 import "./Dashboard.css";
+import BarGraph from "./BarGraph";
 const Dashboard = ({ match }) => {
   const dispatch = useDispatch();
 
   const { products, error } = useSelector((state) => state.products);
 
-  const keyword = match.params.keyword;
+  const keyword = match?.params?.keyword ?? "";
 
   useEffect(() => {
     dispatch(getProduct(keyword));
@@ -56,6 +57,7 @@ const Dashboard = ({ match }) => {
     <>
       <Nav />
       <p className="ourProduct"> Our product</p>
+
       <div className="newSale-products">
         <div className="products">
           {products &&
@@ -64,21 +66,30 @@ const Dashboard = ({ match }) => {
             ))}
         </div>
       </div>
-      <div>
-        <div className="ourProduct">Sales Chart</div>
-        <div style={{ marginTop: "20px" }}>
-          <LineChart width={1000} height={500} data={data}>
-            <XAxis dataKey="name" />
-            <YAxis />
-            <CartesianGrid stroke="#ccc" />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="value" stroke="#8884d8" />
-          </LineChart>
+
+      <div style={{ display: "flex" }}>
+        <div>
+          <div className="ourProduct">Sales Chart</div>
+          <div style={{ marginTop: "20px" }}>
+            <LineChart width={670} height={500} data={data}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <CartesianGrid stroke="#ccc" />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="value" stroke="#8884d8" />
+            </LineChart>
+          </div>
         </div>
+        {/* <div>
+          <div className="ourProduct">Stock Graph</div>
+          <div>
+            <BarGraph />
+          </div>
+        </div> */}
       </div>
 
-      <div>
+      <div style={{ marginBottom: "50px" }}>
         {" "}
         <p className="ourProduct"> Today Sales</p>
         <Sales lists={lists} />

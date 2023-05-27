@@ -1,23 +1,25 @@
-import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Redirect, Route } from "react-router-dom";
 
-const ProtectedRoute = ({ isAdmin, component: Component, ...rest }) => {
-  const token = localStorage.getItem('token');
-
+const SuperAdminRoute = ({ isAdmin, user, component: Component, ...rest }) => {
+  const token = localStorage.getItem("token");
+  console.log(user, "user");
+  if (!token) {
+    return (
+      <>
+        <Redirect to={"/"} />
+      </>
+    );
+  }
+  if (user?.role != "superadmin") {
+    return <Redirect to={"/"} />;
+  }
   return (
     <>
-      {typeof token != 'undefined' ? (
-        <Route
-          {...rest}
-          render={(props) => {
-            return <Component {...props} />;
-          }}
-        />
-      ) : (
-        <Redirect to={'/'} />
-      )}
+      <Component {...rest} />
     </>
   );
 };
 
-export default ProtectedRoute;
+export default SuperAdminRoute;

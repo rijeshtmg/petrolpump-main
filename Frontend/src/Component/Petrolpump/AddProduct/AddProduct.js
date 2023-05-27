@@ -41,7 +41,7 @@ const AddProduct = () => {
     e.preventDefault();
 
     const myForm = new FormData();
-
+    
     myForm.set("sn", sn);
     myForm.set("name", name);
     myForm.set("supplier", supplier);

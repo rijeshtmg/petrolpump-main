@@ -60,7 +60,7 @@ const NewSale = ({ match }) => {
 
   const { products, error } = useSelector((state) => state.products);
 
-  const keyword = match.params.keyword;
+  const keyword = match?.params?.keyword ?? "";
 
   useEffect(() => {
     dispatch(getProduct(keyword));

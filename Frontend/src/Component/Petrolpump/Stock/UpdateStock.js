@@ -18,7 +18,7 @@ import DiscountIcon from "@material-ui/icons/LocalOffer";
 import { UPDATE_PRODUCT_RESET } from "../../../constans/ProductConstans";
 import { ToastContainer, toast } from "react-toastify";
 
-const UpdateProduct = ({ history, match }) => {
+const UpdateStock = ({ history, match }) => {
   const dispatch = useDispatch();
 
   const { error, product } = useSelector((state) => state.productDetails);
@@ -30,11 +30,11 @@ const UpdateProduct = ({ history, match }) => {
   } = useSelector((state) => state.deleteProduct);
 
   const [name, setName] = useState("");
-  const [saleprice, setPrice] = useState(0);
-  const [supprice, setSupPrice] = useState(0);
+  const [saleprice, setPrice] = useState("");
+  const [supprice, setSupPrice] = useState("");
   const [sn, setSN] = useState("");
 
-  const [stock, setStock] = useState(0);
+  const [stock, setStock] = useState("");
 
   const productId = match.params.id;
 
@@ -60,7 +60,7 @@ const UpdateProduct = ({ history, match }) => {
 
     if (isUpdated) {
       toast.success("Product Updated Successfully");
-      history.push("/admin/products");
+      history.push("/stock");
       dispatch({ type: UPDATE_PRODUCT_RESET });
     }
   }, [
@@ -180,4 +180,4 @@ const UpdateProduct = ({ history, match }) => {
   );
 };
 
-export default UpdateProduct;
+export default UpdateStock;

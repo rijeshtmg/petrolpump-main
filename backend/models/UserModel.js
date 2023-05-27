@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Please enter your password!"],
-    minlength: [8, "Password should be greater than 8 characters"],
+    minlength: [4, "Password should be greater than 8 characters"],
     select: false,
   },
   address: {
@@ -39,15 +39,15 @@ const userSchema = new mongoose.Schema({
     default: "he",
   },
 
-  // avatar: {
-  //   //required: [false, "Please choose Profile avatar"],
-  //   public_id: {
-  //     type: String,
-  //   },
-  //   url: {
-  //     type: String,
-  //   },
-  // },
+  avatar: {
+    // required: [false, "Please choose Profile avatar"],
+    public_id: {
+      type: String,
+    },
+    url: {
+      type: String,
+    },
+  },
   role: {
     type: String,
     default: "user",

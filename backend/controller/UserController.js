@@ -32,6 +32,7 @@ exports.createUser = catchAsyncErrors(async (req, res, next) => {
 
     sendToken(user, 201, res);
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       success: false,
       message: error.message,
@@ -46,7 +47,6 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   if (!email || !password) {
     return next(new ErrorHandler("Please enter the email & password", 400));
   }
-
   const user = await User.findOne({ email }).select("+password");
 
   if (!user) {
@@ -54,8 +54,9 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
       new ErrorHandler("User is not find with this email & password", 401)
     );
   }
-  const isPasswordMatched = await user.comparePassword(password);
 
+  const isPasswordMatched = await user.comparePassword(password);
+  console.log(isPasswordMatched);
   if (!isPasswordMatched) {
     return next(
       new ErrorHandler("User is not find with this email & password", 401)
@@ -86,7 +87,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("User not found with this email", 404));
   }
 
-  // Get ResetPassword Token
+  // Get ResetPassword
 
   const resetToken = user.getResetToken();
 
@@ -94,16 +95,15 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
     validateBeforeSave: false,
   });
 
-  const resetPasswordUrl = `${req.protocol}://${req.get(
-    "host"
-  )}/password/reset/${resetToken}`;
+  const resetPasswordUrl = `
+    http://localhost:3000/password/reset/${resetToken}`;
 
   const message = `Your password reset token is :- \n\n ${resetPasswordUrl}`;
 
   try {
     await sendMail({
       email: user.email,
-      subject: `Ecommerce Password Recovery`,
+      subject: `Password Recovery`,
       message,
     });
 

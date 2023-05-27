@@ -50,6 +50,7 @@ const AddPurchase = () => {
     myForm.set("totalamount", totalamount);
 
     dispatch(createPurchase(myForm));
+    
   };
 
   return (
