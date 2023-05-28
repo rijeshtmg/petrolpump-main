@@ -4,7 +4,10 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 
 // create purchase-user
 exports.createUserPurchase = catchAsyncErrors(async (req, res, next) => {
-  const userPurchase = await UserPurchase.create(req.body);
+  const userPurchase = await UserPurchase.create({
+    ...req.body,
+    user: req.user.id,
+  });
 
   res.status(201).json({
     success: true,
@@ -14,7 +17,10 @@ exports.createUserPurchase = catchAsyncErrors(async (req, res, next) => {
 
 // Get All purchase(user)
 exports.getUserPurchase = catchAsyncErrors(async (req, res, next) => {
-  const userPurchases = await UserPurchase.find();
+  console.log(req.user);
+  const userPurchases = await UserPurchase.find({
+    user: req.user.id,
+  });
 
   res.status(200).json({
     success: true,

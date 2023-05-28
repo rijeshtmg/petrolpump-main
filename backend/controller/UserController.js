@@ -18,9 +18,9 @@ exports.createUser = catchAsyncErrors(async (req, res, next) => {
         .json({ success: false, message: "User already exists" });
     }
 
-    // const myCloud = await cloudinary.v2.uploader.upload(avatar, {
-    //   folder: "avatars",
-    // });
+    const myCloud = await cloudinary.v2.uploader.upload(avatar, {
+      folder: "avatars",
+    });
 
     user = await User.create({
       name,
@@ -48,7 +48,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Please enter the email & password", 400));
   }
   const user = await User.findOne({ email }).select("+password");
-
+  console.log(email);
   if (!user) {
     return next(
       new ErrorHandler("User is not find with this email & password", 401)
@@ -58,9 +58,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   const isPasswordMatched = await user.comparePassword(password);
   console.log(isPasswordMatched);
   if (!isPasswordMatched) {
-    return next(
-      new ErrorHandler("User is not find with this email & password", 401)
-    );
+    return next(new ErrorHandler("wrong password", 401));
   }
 
   sendToken(user, 201, res);
@@ -188,50 +186,39 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
-// Update User Profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
-  console.log("running");
-  const newUserData = {
-    name: req.body.name,
-    email: req.body.email,
-    address: req.body?.address || "",
-    description: req.body?.description || "",
-  };
+  const { name, email, address, description, avatar } = req.body;
 
-  if (req.body?.avatar) {
-    const user = await User.findById(req.user.id);
+  const user = await User.findById(req.user.id);
 
-    const imageId = user.avatar.public_id;
+  if (avatar) {
+    if (user.avatar) {
+      const imageId = user.avatar.public_id;
+      await cloudinary.v2.uploader.destroy(imageId);
+    }
 
-    await cloudinary.v2.uploader.destroy(imageId);
-
-    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    const myCloud = await cloudinary.v2.uploader.upload(avatar, {
       folder: "avatars",
       width: 150,
       crop: "scale",
     });
-    newUserData.avatar = {
+
+    user.avatar = {
       public_id: myCloud.public_id,
       url: myCloud.secure_url,
     };
   }
-  console.log(newUserData, "new");
-  console.log(req.user);
 
-  User.f;
-  let data = await User.findOneAndUpdate(
-    { email: req.user.email },
-    newUserData,
-    {
-      new: true,
-      runValidator: true,
-      useFindAndModify: false,
-    }
-  );
+  user.name = name || user.name;
+  user.email = email || user.email;
+  user.address = address || user.address;
+  user.description = description || user.description;
+
+  await user.save();
 
   res.status(200).json({
     success: true,
-    data,
+    data: user,
   });
 });
 
@@ -248,6 +235,19 @@ exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
 // Get Single User Details ---Admin
 exports.getSingleUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return next(new ErrorHandler("User is not found with this id", 400));
+  }
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
+exports.AdminUser = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.find({ role: "admin" });
 
   if (!user) {
     return next(new ErrorHandler("User is not found with this id", 400));
@@ -282,9 +282,9 @@ exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
 exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.params.id);
 
-  const imageId = user.avatar.public_id;
+  // const imageId = user.avatar.public_id;
 
-  await cloudinary.v2.uploader.destroy(imageId);
+  // await cloudinary.v2.uploader.destroy(imageId);
 
   if (!user) {
     return next(new ErrorHandler("User is not found with this id", 400));

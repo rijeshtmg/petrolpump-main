@@ -31,21 +31,21 @@ const userSchema = new mongoose.Schema({
   address: {
     type: String,
     maxlength: [100],
-    default: "hs",
   },
   description: {
     type: String,
     maxlength: [200],
-    default: "he",
   },
 
   avatar: {
-    // required: [false, "Please choose Profile avatar"],
+    required: [false, "Please choose Profile avatar"],
     public_id: {
       type: String,
+      required: false,
     },
     url: {
       type: String,
+      required: false,
     },
   },
   role: {

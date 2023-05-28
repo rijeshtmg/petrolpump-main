@@ -11,18 +11,17 @@ const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 const router = express.Router();
 const Product = require("../models/ProductModel");
 
+//router.use(isAuthenticatedUser);
 router.route("/products").get(getAllProducts);
 
-router
-  .route("/admin/products")
-  .get(isAuthenticatedUser, /*authorizeRoles("admin")*/ getAdminProducts);
+router.route("/admin/products").get(getAdminProducts);
 
-router.route("/product/new").post(/*authorizeRoles("admin")*/ createProduct);
+router.route("/product/new").post(authorizeRoles("admin"), createProduct);
 
 router.put(
   "/products/:id",
-  // isAuthenticatedUser,
-  // authorizeRoles("admin"),
+  isAuthenticatedUser,
+  authorizeRoles("admin"),
   async (req, res) => {
     try {
       const updatedProduct = await Product.findByIdAndUpdate(
@@ -42,7 +41,7 @@ router.put(
 router
   .route("/product/:id")
   .put(updateProduct)
-  .delete(/*isAuthenticatedUser*/ deleteProduct)
+  .delete(deleteProduct)
   .get(getSingleProduct);
 
 module.exports = router;

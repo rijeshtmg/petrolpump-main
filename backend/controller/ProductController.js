@@ -6,7 +6,7 @@ const cloudinary = require("cloudinary");
 
 // create Product --Admin
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
-  const product = await Product.create(req.body);
+  const product = await Product.create({ ...req.body, user: req.user.id });
 
   res.status(201).json({
     success: true,
@@ -16,7 +16,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 
 // Get All Product (Admin)
 exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
-  const products = await Product.find();
+  const products = await Product.find({ user: req.user.id });
 
   res.status(200).json({
     success: true,
@@ -36,8 +36,6 @@ exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
-
 // Update Product ---Admin
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
   let product = await Product.findById(req.params.id);
@@ -56,13 +54,12 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 exports.getAllProducts = catchAsyncErrors(async (req, res) => {
   const resultPerPage = 8;
 
   const productsCount = await Product.countDocuments();
 
-  const feature = new Features(Product.find(), req.query)
+  const feature = new Features(Product.find().populate("user"), req.query)
     .search()
     .filter()
     .pagination(resultPerPage);

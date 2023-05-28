@@ -7,14 +7,12 @@ import {
   getProductDetails,
 } from "../../../actions/ProductActions";
 import { Button } from "@material-ui/core";
-//import MetaData from "../../more/Metadata";
-import AccountTreeIcon from "@material-ui/icons/AccountTree";
+
 import DescriptionIcon from "@material-ui/icons/Description";
 import StorageIcon from "@material-ui/icons/Storage";
 import SpellcheckIcon from "@material-ui/icons/Spellcheck";
 import CurrencyRupee from "@mui/icons-material/CurrencyRupee"; // eslint-disable-next-line
-import DiscountIcon from "@material-ui/icons/LocalOffer";
-//import SideBar from "./Sidebar";
+
 import { UPDATE_PRODUCT_RESET } from "../../../constans/ProductConstans";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -22,6 +20,7 @@ const UpdateStock = ({ history, match }) => {
   const dispatch = useDispatch();
 
   const { error, product } = useSelector((state) => state.productDetails);
+  console.log(product);
 
   const {
     loading,

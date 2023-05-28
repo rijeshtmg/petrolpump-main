@@ -26,9 +26,9 @@ const purchase = require("./routes/PurchaseRoute");
 const user = require("./routes/UserRoute");
 const sale = require("./routes/SaleRoute");
 const userpurchase = require("./routes/UserPurchaseRoute");
+app.use("/api/v2", user);
 app.use("/api/v2", product);
 app.use("/api/v2", purchase);
-app.use("/api/v2", user);
 app.use("/api/v2", sale);
 app.use("/api/v2", userpurchase);
 

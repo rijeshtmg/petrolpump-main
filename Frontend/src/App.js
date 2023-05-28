@@ -31,44 +31,13 @@ import SuperAdminRoute from "./Route/SuperAdminRoute";
 import ProtectedUserRoute from "./Route/AdminRoute";
 
 function App() {
-  const [user, setUser] = useState(null);
-  const loadProfile = async () => {
-    try {
-      let res = await axios.get(`${process.env.REACT_APP_API}/api/v2/me`, {
-        headers: {
-          authorization: localStorage.getItem("token"),
-        },
-      });
-      console.log(res.data, "hha");
-      setUser(res.data.user);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      loadProfile();
-    }
-  }, []);
   return (
     <Router>
       <div className="body">
         <Switch>
           <Route exact path="/" component={LoginSignup} />
-          <ProtectedRoute
-            exact
-            path="/dashboard"
-            user={user}
-            component={Dashboard}
-          />
-          <ProtectedRoute
-            user={user}
-            isAdmin={true}
-            exact
-            path="/Pos"
-            component={Pos}
-          />
+          <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+          <ProtectedRoute isAdmin={true} exact path="/Pos" component={Pos} />
           <ProtectedRoute
             isAdmin={true}
             exact
@@ -78,63 +47,45 @@ function App() {
           <ProtectedRoute
             isAdmin={true}
             exact
-            user={user}
             path="/stock"
             component={Stock}
           />
           <ProtectedRoute
             isAdmin={true}
             exact
-            user={user}
             path="/addproduct"
             component={AddProduct}
           />
           <ProtectedRoute
             isAdmin={true}
             exact
-            user={user}
             path="/salesreport"
             component={SalesReport}
           />
           <ProtectedRoute
             isAdmin={true}
             exact
-            user={user}
             path="/manageproduct"
             component={ManageProduct}
           />
           <ProtectedRoute
             isAdmin={true}
             exact
-            user={user}
             path="/addpurchase"
             component={AddPurchase}
           />
           <ProtectedRoute
             isAdmin={true}
             exact
-            user={user}
             path="/purchasereport"
             component={PurchaseReport}
           />
-          <ProtectedUserRoute
-            user={user}
-            exact
-            path="/userHome"
-            component={Home}
-          />
-          <Route exact path="/statement" component={Statement} />
-          <ProtectedRoute
-            //isAdmin={true}
-            exact
-            user={user}
-            path="/edit/product/:id"
-            component={UpdateProduct}
-          />
+          <ProtectedUserRoute exact path="/userHome" component={Home} />
+          <ProtectedUserRoute exact path="/statement" component={Statement} />
+          <Route exact path="/product/:id" component={UpdateProduct} />
           <Route
             //isAdmin={true}
             exact
-            user={user}
             path="/stockup/:id"
             component={UpdateStock}
           />
@@ -145,27 +96,12 @@ function App() {
             component={UpdateUser}
           />
 
-          <SuperAdminRoute
-            user={user}
-            exact
-            path="/users"
-            component={AllUsers}
-          />
-          <Route exact path="/purchase" component={Purchase} />
+          <SuperAdminRoute exact path="/users" component={AllUsers} />
+          <ProtectedUserRoute exact path="/purchase" component={Purchase} />
           <Route exact path="/pump" component={PumpCard} />
 
-          <ProtectedRoute
-            user={user}
-            exact
-            path="/profile"
-            component={Profile}
-          />
-          <ProtectedRoute
-            user={user}
-            exact
-            path="/editprofile"
-            component={EditProfile}
-          />
+          <ProtectedRoute exact path="/profile" component={Profile} />
+          <ProtectedRoute exact path="/editprofile" component={EditProfile} />
           <Route exact path="/password/forgot" component={ForgotPassword} />
           <Route
             exact
@@ -175,7 +111,6 @@ function App() {
 
           <ProtectedRoute
             exact
-            user={user}
             path="/changepassword"
             component={ChangePassword}
           />

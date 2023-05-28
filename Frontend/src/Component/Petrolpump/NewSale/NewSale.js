@@ -36,14 +36,27 @@ const NewSale = ({ match }) => {
         `${process.env.REACT_APP_API}/api/v2/products/${type?._id}`,
         {
           stock: type?.stock - data.quantity,
+        },
+        {
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
         }
       );
 
-      await axios.post(`${process.env.REACT_APP_API}/api/v2/sales`, {
-        name: data.name,
-        list: list,
-        total: total,
-      });
+      await axios.post(
+        `${process.env.REACT_APP_API}/api/v2/sales`,
+        {
+          name: data.name,
+          list: list,
+          total: total,
+        },
+        {
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        }
+      );
       toast.success("success");
       setTimeout(() => {
         window.location.reload();
@@ -53,13 +66,41 @@ const NewSale = ({ match }) => {
     }
   };
 
+  // const handleChange = (type) => (e) => {
+  //   setData({ ...data, [type]: e.target.value });
+  // };
   const handleChange = (type) => (e) => {
-    setData({ ...data, [type]: e.target.value });
+    const value = e.target.value;
+    if (type === "quantity" && value < 0) {
+      // Ignore negative values for quantity
+      toast.error("Negative value should not be entered");
+      return;
+    }
+    setData({ ...data, [type]: value });
   };
   const dispatch = useDispatch();
 
   const { products, error } = useSelector((state) => state.products);
 
+  const [adminProducts, setAdMinLists] = useState([]);
+
+  const loadData = async () => {
+    try {
+      let res = await axios.get(
+        `${process.env.REACT_APP_API}/api/v2/admin/products`,
+        {
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(res.data);
+      setAdMinLists(res.data.products);
+    } catch (error) {}
+  };
+  useEffect(() => {
+    loadData();
+  }, []);
   const keyword = match?.params?.keyword ?? "";
 
   useEffect(() => {
@@ -86,8 +127,8 @@ const NewSale = ({ match }) => {
       <p className="selectProduct"> Select a product</p>
       <div className="newSale-products">
         <div className="products">
-          {products &&
-            products.map((product) => (
+          {adminProducts &&
+            adminProducts.map((product) => (
               <ProductCard
                 type={type}
                 key={product.id}
@@ -111,6 +152,7 @@ const NewSale = ({ match }) => {
               onChange={handleChange("quantity")}
               value={data.quantity}
               type="number"
+              min={0}
             />
           </div>
           <div className="newSale-data">

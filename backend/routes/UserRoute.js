@@ -12,16 +12,19 @@ const {
   getSingleUser,
   updateUserRole,
   deleteUser,
+  AdminUser,
 } = require("../controller/UserController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 const router = express.Router();
 
 router.route("/registration").post((req, res, next) => {
-  console.log(req.body);
-  return next();
+  next();
 }, createUser);
 
-router.route("/login").post(loginUser);
+router.route("/login").post((req, res, next) => {
+  console.log(req.body);
+  return next();
+}, loginUser);
 
 router.route("/logout").get(logoutUser);
 
@@ -42,5 +45,7 @@ router
   .get(getSingleUser)
   .put(updateUserRole)
   .delete(deleteUser);
+
+router.route("/stores").get(AdminUser);
 
 module.exports = router;

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import './Profile.css';
-import { logout } from '../../actions/userAction';
-import { toast } from 'react-toastify';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import "./Profile.css";
+import { logout } from "../../actions/userAction";
+import { toast } from "react-toastify";
+import axios from "axios";
 
-const Profile = ({ history }) => {
+const Profile = ({}) => {
   const { isAuthenticated } = useSelector((state) => state.user);
 
   const [user, setUser] = useState({});
@@ -15,7 +15,7 @@ const Profile = ({ history }) => {
     try {
       let res = await axios.get(`${process.env.REACT_APP_API}/api/v2/me`, {
         headers: {
-          authorization: localStorage.getItem('token'),
+          authorization: localStorage.getItem("token"),
         },
       });
       console.log(res.data);
@@ -30,10 +30,12 @@ const Profile = ({ history }) => {
   }, []);
 
   const dispatch = useDispatch();
-
+  const history = useHistory();
   function logoutUser() {
-    dispatch(logout());
-    toast.success('Logout Successfully');
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    toast.success("Logout Successfully");
+    history.push("/");
   }
 
   return (
@@ -42,18 +44,18 @@ const Profile = ({ history }) => {
         <div className="profileContainer">
           <div
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexDirection: 'column',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
             }}
           >
             <h1
               style={{
-                opacity: '1',
-                fontSize: '2vmax',
-                marginTop: '20px',
-                fontWeight:"500"
+                opacity: "1",
+                fontSize: "2vmax",
+                marginTop: "20px",
+                fontWeight: "500",
               }}
             >
               My Profile
@@ -68,9 +70,9 @@ const Profile = ({ history }) => {
               to="/editprofile"
               className="edit__profile"
               style={{
-                margin: '10px 0 0 -70px',
-                color: '#3B67FF',
-                textDecoration: 'none',
+                margin: "10px 0 0 -70px",
+                color: "#3B67FF",
+                textDecoration: "none",
               }}
             >
               Edit Profile

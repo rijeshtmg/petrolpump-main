@@ -8,10 +8,12 @@ import { login } from "../../actions/userAction";
 import { LOGIN_SUCCESS, LOGIN_FAIL } from "../../constans/userContans";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { useUser } from "../../context/useUser";
 
 const LoginForm = forwardRef((props, ref) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { setUser } = useUser();
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -26,7 +28,8 @@ const LoginForm = forwardRef((props, ref) => {
         config
       );
       console.log(data?.user);
-      localStorage.setItem("user", JSON.stringify(data.user._id));
+      localStorage.setItem("user", JSON.stringify(data.user));
+      setUser(data.user);
       localStorage.setItem("token", data.token);
       dispatch({ type: LOGIN_SUCCESS, payload: data.user });
       if (data?.user?.role == "admin") {

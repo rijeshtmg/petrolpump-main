@@ -37,11 +37,31 @@ const AddProduct = () => {
     }
   }, [dispatch, error, success, history]);
 
+  // const createProductSubmitHandler = (e) => {
+  //   e.preventDefault();
+
+  //   const myForm = new FormData();
+
+  //   myForm.set("sn", sn);
+  //   myForm.set("name", name);
+  //   myForm.set("supplier", supplier);
+  //   myForm.set("supprice", supprice);
+  //   myForm.set("saleprice", saleprice);
+  //   myForm.set("unit", unit);
+  //   myForm.set("stock", stock);
+
+  //   dispatch(createProduct(myForm));
+  // };
   const createProductSubmitHandler = (e) => {
     e.preventDefault();
 
+    if (sn < 0 || stock < 0 || supprice < 0 || saleprice < 0) {
+      toast.error("Please enter non-negative values.");
+      return;
+    }
+
     const myForm = new FormData();
-    
+
     myForm.set("sn", sn);
     myForm.set("name", name);
     myForm.set("supplier", supplier);

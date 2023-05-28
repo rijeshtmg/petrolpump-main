@@ -30,9 +30,15 @@ const Dashboard = ({ match }) => {
   const loadData = async () => {
     try {
       let res = await axios.get(
-        `${process.env.REACT_APP_API}/api/v2/admin/sales`
+        `${process.env.REACT_APP_API}/api/v2/admin/products`,
+        {
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        }
       );
-      setLists(res.data.sales);
+      console.log(res.data);
+      setLists(res.data.products);
     } catch (error) {}
   };
   useEffect(() => {
@@ -60,8 +66,8 @@ const Dashboard = ({ match }) => {
 
       <div className="newSale-products">
         <div className="products">
-          {products &&
-            products.map((product) => (
+          {lists &&
+            lists.map((product) => (
               <DProductCard key={product.id} product={product} />
             ))}
         </div>

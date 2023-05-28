@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
+import { useUser } from "../context/useUser";
 
-const SuperAdminRoute = ({ isAdmin, user, component: Component, ...rest }) => {
+const SuperAdminRoute = ({ isAdmin, component: Component, ...rest }) => {
   const token = localStorage.getItem("token");
-  console.log(user, "user");
+  const { user } = useUser();
   if (!token) {
     return (
       <>

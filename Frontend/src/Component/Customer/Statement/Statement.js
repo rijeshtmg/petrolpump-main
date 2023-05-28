@@ -8,7 +8,12 @@ const Statement = () => {
   const loadData = async () => {
     try {
       let res = await axios.get(
-        `${process.env.REACT_APP_API}/api/v2/user/purchase`
+        `${process.env.REACT_APP_API}/api/v2/user/purchase`,
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        }
       );
       setLists(res.data.userPurchases);
     } catch (error) {}

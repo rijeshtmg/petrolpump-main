@@ -34,7 +34,12 @@ export const getProduct =
       if (category) {
         link = `/api/v2/products?keyword=${keyword}&page=${currentPage}&category=${category}`;
       }
-      const { data } = await axios.get(link);
+      const { data } = await axios.get(link, {
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+      });
+      console.log(data);
 
       dispatch({
         type: ALL_PRODUCT_SUCCESS,
@@ -73,7 +78,10 @@ export const createProduct = (productData) => async (dispatch) => {
     dispatch({ type: NEW_PRODUCT_REQUEST });
 
     const config = {
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("token"),
+      },
     };
 
     const { data } = await axios.post(
@@ -122,7 +130,11 @@ export const deleteProduct = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_PRODUCT_REQUEST });
 
-    const { data } = await axios.delete(`/api/v2/product/${id}`);
+    const { data } = await axios.delete(`/api/v2/product/${id}`, {
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+    });
 
     dispatch({
       type: DELETE_PRODUCT_SUCCESS,
@@ -142,7 +154,10 @@ export const updateProduct = (id, productData) => async (dispatch) => {
     dispatch({ type: UPDATE_PRODUCT_REQUEST });
 
     const config = {
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("token"),
+      },
     };
 
     const { data } = await axios.put(`/api/v2/product/${id}`, {

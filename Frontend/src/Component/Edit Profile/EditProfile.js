@@ -19,9 +19,9 @@ const EditProfile = ({ history }) => {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [avatar, setAvatar] = useState();
-  const [address, setAddress] = useState();
-  const [description, setDescription] = useState();
+  const [avatar, setAvatar] = useState("");
+  const [address, setAddress] = useState("");
+  const [description, setDescription] = useState("");
   const [avatarPreview, setAvatarPreview] = useState("/profile.png");
 
   const updateProfileSubmit = (e) => {
@@ -31,11 +31,14 @@ const EditProfile = ({ history }) => {
 
     myForm.set("name", name);
     myForm.set("email", email);
-    if (avatar) {
-      myForm.set("avatar", avatar);
-    }
     myForm.set("description", description);
     myForm.set("address", address);
+
+    // Check if an avatar is selected before adding it to the form data
+    if (avatar) {
+      myForm.append("avatar", avatar);
+    }
+
     dispatch(updateProfile(myForm));
   };
 
@@ -48,7 +51,13 @@ const EditProfile = ({ history }) => {
         setAvatar(reader.result);
       }
     };
-    // reader.readAsDataURL(e.target.files[0]);
+
+    if (e.target.files.length === 0) {
+      setAvatarPreview("/profile.png");
+      setAvatar("");
+    } else {
+      reader.readAsDataURL(e.target.files[0]);
+    }
   };
 
   useEffect(() => {
@@ -148,7 +157,11 @@ const EditProfile = ({ history }) => {
               />
             </div>
             <div id="updateProfileImage">
-              <img src={avatarPreview} alt="Avatar Preview" />
+              {avatarPreview !== "" ? (
+                <img src={avatarPreview} alt="Avatar Preview" />
+              ) : (
+                <img src="/profile.png" alt="Default Avatar" />
+              )}
               <input
                 type="file"
                 name="avatar"
@@ -156,6 +169,7 @@ const EditProfile = ({ history }) => {
                 onChange={updateProfileDataChange}
               />
             </div>
+
             <input type="submit" value="Update" className="UpdateProfileBtn" />
           </form>
         </div>

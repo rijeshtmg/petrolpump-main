@@ -1,28 +1,28 @@
-import React, { useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import { useDispatch } from 'react-redux';
-import { toast, ToastContainer } from 'react-toastify';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import Navbar from 'react-bootstrap/Navbar';
-import { logout } from '../../../actions/userAction';
-import { NavDropdown } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import { useDispatch } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import Navbar from "react-bootstrap/Navbar";
+import { logout } from "../../../actions/userAction";
+import { NavDropdown } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export default function ANavbar() {
   const dispatch = useDispatch();
   const history = useHistory();
   function logoutUser() {
     dispatch(logout());
-    toast.success('Logout Successfully');
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    history.push('/');
+    toast.success("Logout Successfully");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    history.push("/");
   }
   const [index, setIndex] = useState(0);
   const location = useLocation();
-  if (location.pathname === '/') {
+  if (location.pathname === "/") {
     return null;
   }
   return (
@@ -31,16 +31,16 @@ export default function ANavbar() {
         bg="white"
         expand="lg"
         className="m-2 Navbar"
-        style={{ borderBottom: '0.75px solid #E4E4E4' }}
+        style={{ borderBottom: "0.75px solid #E4E4E4" }}
       >
         <Container>
           <Navbar.Brand
             as={Link}
             to="/users"
             style={{
-              color: '#3B67FF',
+              color: "#3B67FF",
               fontSize: 24,
-              fontWeight: 'bold',
+              fontWeight: "bold",
               marginLeft: -20,
             }}
           >
@@ -50,19 +50,16 @@ export default function ANavbar() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="justify-content-center flex-grow-1 pe-3 gap-3">
               <Nav.Link
-                className={index === 0 ? 'nav-active' : 'nav-item'}
+                className={index === 0 ? "nav-active" : "nav-item"}
                 onClick={() => setIndex(0)}
                 as={Link}
                 to="/users"
               >
                 All Users
               </Nav.Link>
-              <Nav.Link as={Link} to="/confirmproduct">
-                Confirm Product
-              </Nav.Link>
             </Nav>
             <NavDropdown
-              className={index === 3 ? 'nav-active' : 'nav-item'}
+              className={index === 3 ? "nav-active" : "nav-item"}
               profile
               onClick={() => setIndex(3)}
               title={<AccountCircleIcon />}

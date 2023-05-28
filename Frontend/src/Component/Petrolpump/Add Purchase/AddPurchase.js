@@ -39,7 +39,10 @@ const AddPurchase = () => {
 
   const createPurchaseSubmitHandler = (e) => {
     e.preventDefault();
-
+    if (sn < 0 || stock < 0 || supprice < 0 || totalamount < 0) {
+      toast.error("Please enter non-negative values.");
+      return;
+    }
     const myForm = new FormData();
 
     myForm.set("sn", sn);
@@ -47,10 +50,9 @@ const AddPurchase = () => {
     myForm.set("supplier", supplier);
     myForm.set("supprice", supprice);
     myForm.set("stock", stock);
-    myForm.set("totalamount", totalamount);
+    myForm.set("totalamount", stock * supprice);
 
     dispatch(createPurchase(myForm));
-    
   };
 
   return (
@@ -130,8 +132,9 @@ const AddPurchase = () => {
                 <input
                   type="number"
                   required
-                  value={totalamount}
+                  value={stock * supprice}
                   onChange={(e) => setTotalamount(e.target.value)}
+                  readOnly
                 />{" "}
               </div>
             </div>

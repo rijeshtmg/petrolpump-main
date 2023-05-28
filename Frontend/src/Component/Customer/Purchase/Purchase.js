@@ -35,9 +35,14 @@ const Purchase = ({ match }) => {
       await axios.post(
         `${process.env.REACT_APP_API}/api/v2/user/userpurchase`,
         {
-          name: data.name,
+          name: type?.user?.name,
           list: list,
           total: total,
+        },
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
         }
       );
       toast.success("success");
@@ -56,7 +61,7 @@ const Purchase = ({ match }) => {
 
   const { products, error } = useSelector((state) => state.products);
 
-  const keyword = match.params.keyword;
+  const keyword = match?.params?.keyword ?? "";
 
   useEffect(() => {
     dispatch(getProduct(keyword));
@@ -99,7 +104,7 @@ const Purchase = ({ match }) => {
         <div className="newSale-detail">
           <div className="newSale-data newSale-data-petrolpump">
             <h1>Petrolpump Name:</h1>{" "}
-            <input onChange={handleChange("name")} value={data.name} />
+            <input value={type?.user?.name} readOnly />
           </div>
         </div>
         <div className="newSale-detail">
